@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking appointment App</title>
+  <style>
+    header{
+        background: #f4f4f4;
+        text-align: center;
+    }
+    .container{
+        margin: auto;
+        width: 500px;
+        overflow: auto;
+    }
+    #my-form{
+        padding: 2rem;
+        background: #f4f4f4;
+    }
+    #my-form label{
+        display: block;
+    }
+   #my-form input{
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+
+   }
+
+    .btn{
+        display:block ;;
+        background: #333;
+        color: #fff;
+        margin: 5px 0;
+        padding: 10px 15px;
+        border-radius: 5px;
+        width: 50%;
+        margin-left: 25%;
+    }
+
+    .btn:hover{
+        background: #444;
+    }
+  </style>
+
+</head>
+<body>
+    <header>
+        <h1>Booking appointment App</h1>
+    </header>
+
+    <div class="container">
+  <form id="my-form">
+       <label for="name">Name:</label>
+       <input type="text" id="name">
+  
+       <label for="email">E-mail:</label>
+       <input type="email" id="email">
+   
+        <label for="ph">Phone N:</label>
+        <input type="text" id="ph">
+     <button class="btn">Submit</button>
+  </form>
+
+    </div>
+    <script>
+  var form=document.getElementById('my-form');
+var btn=document.querySelector('.btn');
+var name1=document.querySelector('#name');
+var email=document.querySelector('#email');
+var phn=document.querySelector('#ph');
+var bodyt=document.getElementsByTagName('body');
+console.log(phn);
+btn.addEventListener('click',clickbtn);
+   
+function clickbtn(e){
+  e.preventDefault();
+  
+
+    localStorage.setItem(' Name',name1.value);
+    localStorage.setItem(' E-mail' ,email.value);
+    localStorage.setItem(' Phone N.',phn.value);
+    
+}
+
+
+
+    </script>
+</body>
+</html>
