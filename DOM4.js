@@ -44,3 +44,31 @@ function removeitem(e){
         }
     }
 }
+//************ */ filter items *******
+
+var filter=document.querySelector('#filter');
+
+filter.addEventListener('keyup', filertitem);
+
+function filertitem(e){
+//covert text to lowercase
+
+var text=e.target.value.toLowerCase();
+//get list
+var item = iteml.getElementsByTagName('li');
+console.log(text);
+
+//convert to array 
+
+Array.from(item).forEach(function(item){
+    var itemName=item.firstChild.textContent;
+
+    if(itemName.toLowerCase().indexOf(text) !=-1){
+       item.style.display='block'; 
+    }
+    else{
+        item.style.display='none';
+    }
+})
+
+}
