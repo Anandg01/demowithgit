@@ -66,23 +66,29 @@
 
     </div>
     <script>
-  var form=document.getElementById('my-form');
 var btn=document.querySelector('.btn');
+
 var name1=document.querySelector('#name');
 var email=document.querySelector('#email');
 var phn=document.querySelector('#ph');
-var bodyt=document.getElementsByTagName('body');
-console.log(phn);
+
+
 btn.addEventListener('click',clickbtn);
    
 function clickbtn(e){
   e.preventDefault();
   
 
-    localStorage.setItem(' Name',name1.value);
-    localStorage.setItem(' E-mail' ,email.value);
-    localStorage.setItem(' Phone N.',phn.value);
-    
+const obj={
+     name:name1.value,
+  email:email.value,
+   phoneNumber:phn.value
+}
+
+   // localStorage.setItem(' Name',name1.value);
+   // localStorage.setItem(' E-mail' ,email.value);
+    localStorage.setItem(email.value,JSON.stringify(obj));
+
 }
 
 
