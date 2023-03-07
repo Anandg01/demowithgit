@@ -52,47 +52,80 @@
     </header>
 
     <div class="container">
-  <form id="my-form">
-       <label for="name">Name:</label>
-       <input type="text" id="name">
+  <form id="my-form" onsubmit="clickbtn(event)">
+       <label for="username">Name:</label>
+       <input type="text" id="username">
   
-       <label for="email">E-mail:</label>
-       <input type="email" id="email">
+       <label for="emailId">E-mail:</label>
+       <input type="email" id="emailId">
    
-        <label for="ph">Phone N:</label>
-        <input type="text" id="ph">
+        <label for="phn">Phone N:</label>
+        <input type="text" id="phn">
      <button class="btn">Submit</button>
   </form>
-
     </div>
+<div class="container">
+    <ol id="listofitem"> </ol>    
+</div>
+
     <script>
-var btn=document.querySelector('.btn');
 
-var name1=document.querySelector('#name');
-var email=document.querySelector('#email');
-var phn=document.querySelector('#ph');
-
-
-btn.addEventListener('click',clickbtn);
+const list=document.querySelector('#listofitem');
    
-function clickbtn(e){
-  e.preventDefault();
+function clickbtn(event){
+  event.preventDefault();
   
+  const name=event.target.username.value;
+  const email=event.target.emailId.value;
+  const phoneNumber=event.target.phn.value;
 
 const obj={
-     name:name1.value,
-  email:email.value,
-   phoneNumber:phn.value
+     name,
+  email,
+   phoneNumber
 }
 
    // localStorage.setItem(' Name',name1.value);
    // localStorage.setItem(' E-mail' ,email.value);
-    localStorage.setItem(email.value,JSON.stringify(obj));
-
+    localStorage.setItem(obj.email,JSON.stringify(obj));
+    
+    showUserOnscreen(obj);
 }
 
+function showUserOnscreen(obj){
+    const prentEl=document.getElementById('listofitem');
+    
+    const li=document.createElement('li');
+    li.textContent=obj.name+' -'+obj.email +'- '+obj.phoneNumber;
 
+    
+var deletbtn= document.createElement('button');
 
+// add calass to del
+deletbtn.className='Delete';
+
+deletbtn.appendChild(document.createTextNode('Delete'));
+
+// apply x to li
+li.appendChild(deletbtn);
+prentEl.appendChild(li);
+}
+
+// remove li element
+list.addEventListener('click',removeitem);
+
+function removeitem(e){
+
+    if(e.target.classList.contains('Delete')){
+            
+        var li=e.target.parentElement;
+            list.removeChild(li);
+            let str =li.textContent;
+            let subst=str.split("-");
+            console.log(subst[1]);
+      localStorage.removeItem(subst[1]);
+    }
+}
     </script>
 </body>
 </html>
