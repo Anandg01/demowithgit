@@ -96,7 +96,7 @@ function showUserOnscreen(obj){
     const prentEl=document.getElementById('listofitem');
     
     const li=document.createElement('li');
-    li.textContent=obj.name+' -'+obj.email +'- '+obj.phoneNumber;
+    li.textContent=obj.name+'-'+obj.email +'-'+obj.phoneNumber;
 
     
 var deletbtn= document.createElement('button');
@@ -104,16 +104,23 @@ var deletbtn= document.createElement('button');
 // add calass to del
 deletbtn.className='Delete';
 
-deletbtn.appendChild(document.createTextNode('Delete'));
+deletbtn.appendChild(document.createTextNode('-Delete'));
 
-// apply x to li
+// apply Delete  to li
 li.appendChild(deletbtn);
 prentEl.appendChild(li);
+
+var editbtn=document.createElement('button');
+editbtn.className='edit';
+editbtn.appendChild(document.createTextNode('Edit'));
+li.appendChild(editbtn);
+prentEl.appendChild(li);
+
 }
 
 // remove li element
 list.addEventListener('click',removeitem);
-
+list.addEventListener('click',editinput);
 function removeitem(e){
 
     if(e.target.classList.contains('Delete')){
@@ -122,10 +129,26 @@ function removeitem(e){
             list.removeChild(li);
             let str =li.textContent;
             let subst=str.split("-");
-            console.log(subst[1]);
       localStorage.removeItem(subst[1]);
     }
 }
+
+function editinput(e){
+    if(e.target.classList.contains('edit')){
+    var li =e.target.parentElement;
+    let str=li.textContent;
+    let subst=str.split('-');
+  var namev=document.getElementById('username');
+  var emalivalue=document.getElementById('emailId');
+  var phonva=document.getElementById('phn');
+  list.removeChild(li);
+  localStorage.removeItem(subst[1]);
+ namev.value=subst[0];
+ emalivalue.value=subst[1];
+ phonva.value=subst[2];
+    }
+}
+
     </script>
 </body>
-</html>
+</html>  
