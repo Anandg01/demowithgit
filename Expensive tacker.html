@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense tracker</title>
+      <style>
+    h1{
+   text-align: center;
+   color: rgb(196, 23, 23);
+        }
+        .container{
+        margin: auto;
+        width: 500px;
+        overflow: auto;
+    }
+    #my-form{
+        padding: 2rem;
+        background: #f4f4f4;
+    }
+    #my-form label{
+        display: block;
+    }
+    #cat{
+        width: 100%;
+    border-radius: 5px;
+    padding: 10px;  
+    }
+    input{
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+
+   }
+
+    .btn{
+        display:block ;;
+        background: #333;
+        color: #fff;
+        margin: 5px 0;
+        padding: 10px 15px;
+        border-radius: 5px;
+        width: 50%;
+        margin-left: 25%;
+    }
+
+    .btn:hover{
+        background:black;
+    }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Expense tracker</h1>
+    </div>
+    <div class="container">
+    <form id="my-form" onsubmit="clickbtn(event)">
+        <label for="amount">Expence Amount:</label>
+        <input type="number" id="amount">
+        <label for="dis">Expence Discription:</label>
+        <input type="text" id="dis">
+        <label for="cat">Expence Catagery:</label>
+
+       <select name="cat" id="cat"> 
+        <option value="movie">movie</option>
+        <option value="food">food</option>
+        <option value="Electric">Electric</option>
+       <option value="Room Rent">Room Rent</option>
+    </select>
+
+      <button class="btn">Add Expence</button>
+   </form>
+    </div>
+   <div class="container">
+    <ol id="listofitem"> </ol>    
+</div>
+    
+<script>
+const addlist=document.querySelector('#listofitem')
+
+function clickbtn(event){
+  event.preventDefault();
+  
+  const EXamount=event.target.amount.value;
+  const disc=event.target.dis.value;
+  const catagery=event.target.cat.value;
+
+const obj={
+     EXamount,
+     disc,
+     catagery
+}
+localStorage.setItem(obj.catagery,JSON.stringify(obj));
+    showOnscreen(obj);
+
+}
+function showOnscreen(obj){
+    const li=document.createElement('li');
+    li.textContent=obj.EXamount+'-'+obj.disc +'-'+obj.catagery;
+    addlist.appendChild(li);
+
+
+    var deletbtn= document.createElement('button');
+// add calass to del
+deletbtn.className='Delete';
+
+deletbtn.appendChild(document.createTextNode('-Delete'));
+// apply Delete  to li
+li.appendChild(deletbtn);
+addlist.appendChild(li);
+// add edit button
+var editbtn =document.createElement('button');
+editbtn.className='edit';
+editbtn.appendChild(document.createTextNode('Edit'))
+li.appendChild(editbtn)
+addlist.appendChild(li)
+}
+
+
+addlist.addEventListener('click',removeitem);
+function removeitem (e){
+
+if(e.target.classList.contains('Delete')){
+        
+    var li=e.target.parentElement;
+        addlist.removeChild(li);
+        let str =li.textContent;
+        let subst=str.split("-");
+  localStorage.removeItem(subst[2]);
+}
+}
+
+addlist.addEventListener('click',editinput)
+function editinput(e){
+    if(e.target.classList.contains('edit')){
+    var li =e.target.parentElement;
+    let str=li.textContent;
+    let subst=str.split('-');
+
+    localStorage.removeItem(subst[2]);
+      addlist.removeChild(li);
+
+      var amoun=document.querySelector('#amount')
+      var disc=document.querySelector('#dis')
+      var cate=document.querySelector('#cat')
+      amoun.value=subst[0];
+      disc.value=subst[1]
+      cat.value=subst[2];
+    }
+}
+</script>
+
+</body>
+</html>
