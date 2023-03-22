@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anand</title>
+</head>
+<body>
+    <header style="text-align: center; color: red; background: pink;"><h1>Async Await</h1></header>
+
+
+    <script>
+     const posts=[{title:'post1'},{title:"post2"}]
+
+const updatepost=async()=>{
+
+    function printpost(){
+        posts.forEach((post)=>{
+            console.log(post);
+        } )
+    }
+
+  function cretepost(post){
+    return new Promise((res,rej)=>{
+        posts.push(post);
+        res();
+    })
+  }
+
+  const deletepost = new Promise((res,rej)=>{
+    setTimeout(() => {
+        res( posts.pop())
+    }, 1000);
+  })
+
+ let crete=await cretepost({title:'post 3'})
+
+let dele=await deletepost;
+console.log(`Deleted post is ${dele.title}`);
+
+await printpost();
+
+return 'post update'
+}
+    
+updatepost().then((m)=> console.log(m))
+    </script>
+
+</body>
+
+
+</html>
