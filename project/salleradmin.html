@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commers admin portal</title>
+</head>
+<body>
+   <form onsubmit="onsubmitform(event)">
+<label for="sprice">Selling Price:</label>
+<input type="number" id="sprice">
+<label for="productN">Product Name:</label>
+<input type="text" id="productN">
+
+<label for="categriy">Choose a Categary:</label>
+<select id="categriy">
+    <option value="Electronic">Electronic</option>
+    <option value="food">Food</option>
+    <option value="skincare">Skincare</option>
+</select>
+<button class="btn">Add Product</button>
+</form>
+
+<h1>Products</h1>
+<h2>Electronic Item</h2>
+<ul id="listelItem"></ul>
+<h2>Food Item</h2>
+<ul id="foodItem"></ul>
+<h2>Skincare Item</h2>
+<ul id="skinitem"></ul>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+
+<script>
+function onsubmitform(event){
+    event.preventDefault();
+    const price=event.target.sprice.value;
+    const ProductName=event.target.productN.value;
+    const categary=event.target.categriy.value;
+
+    const productDetails={
+        price,
+        ProductName,
+        categary
+    }
+    axios.post("https://crudcrud.com/api/31aa2331f35a44f5a8c8927915d5cd78/appointment",productDetails)
+    .then((res)=>{
+     showOnScreen(res.data)
+    })
+}
+
+
+function showOnScreen(product){
+              document.getElementById('sprice').value='';
+              document.getElementById('productN').value='';
+
+        let parentnode=document.getElementById('listelItem');
+              if(product.categary=="food"){
+                parentnode=document.getElementById('foodItem');
+              }
+
+              if(product.categary=="skincare"){
+             parentnode=document.getElementById('skinitem');
+              }
+    
+    const childnode=`<li id=${product._id}> ${product.price} - ${product.ProductName} 
+    <button class="dt btn" onclick="deleli('${product._id}','${product.categary}')">Delete Order</button>
+    </li> `
+    parentnode.innerHTML=parentnode.innerHTML+childnode;
+}
+
+function deleli(id,cata){
+   axios.delete(`https://crudcrud.com/api/31aa2331f35a44f5a8c8927915d5cd78/appointment/${id}`)
+   .then(()=>{
+    console.log(cata);
+   removeitemli(id,cata)
+   })
+}
+
+function removeitemli(id,cat){
+    let parentnode=document.getElementById('listelItem');
+              if(cat=="food"){
+                parentnode=document.getElementById('foodItem');
+              }
+
+              if(cat=="skincare"){
+             parentnode=document.getElementById('skinitem');
+              }
+    const li=document.getElementById(id)
+    parentnode.removeChild(li);
+}
+
+
+window.addEventListener("DOMContentLoaded",()=>{
+    axios.get("https://crudcrud.com/api/31aa2331f35a44f5a8c8927915d5cd78/appointment")
+    .then((res)=>{
+        res.data.forEach((obj)=>{
+            showOnScreen(obj);
+        })
+    })
+
+})
+
+</script>
+
+</body>
+</html>
